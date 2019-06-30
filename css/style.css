@@ -143,7 +143,7 @@
 }
 
 #banner {
-    background-image: url(../image/Hero.png);
+    background-image: url(../image/opendata/Hero.png);
     background-position: top center;
     height: 380px;
     width: 100%;
@@ -190,7 +190,7 @@ hide original SELECT element:*/
 }
 
 .custom-sel::after {
-    content: url(../image/icons_down.png);
+    content: url(../image/opendata/icons_down.png);
     position: absolute;
     top: 17px;
     right: 17px;
@@ -358,24 +358,24 @@ hide original SELECT element:*/
 }
 
 .site-down p:nth-child(1)::before {
-    content: url(../image/icons_clock.png);
+    content: url(../image/opendata/icons_clock.png);
     margin-right: 9px;
 }
 
 .site-down p:nth-child(2)::before {
-    content: url(../image/icons_pin.png);
+    content: url(../image/opendata/icons_pin.png);
     margin-left: 1px;
     margin-right: 10px;
 }
 
 .site-down p:nth-child(3)::before {
-    content: url(../image/icons_phone.png);
+    content: url(../image/opendata/icons_phone.png);
     margin-left: 3px;
     margin-right: 12px;
 }
 
 .site-down p:last-child::before {
-    content: url(../image/icons_tag.png);
+    content: url(../image/opendata/icons_tag.png);
     margin-right: 8px;
 }
 
@@ -394,16 +394,18 @@ hide original SELECT element:*/
     justify-content: center;
 }
 
+
+
 #content-pages a {
     font-family: .AppleSystemUIFont;
     font-size: 14px;
     color: #4A4A4A;
     text-decoration: none;
+    cursor: pointer
 }
 
 #content-pages > a:first-child {
     font-family: .SFNSText;
-    color: rgba(74, 74, 74, 0.50);
     margin-right: 22px;
     display: none;
 }
@@ -421,8 +423,21 @@ hide original SELECT element:*/
     margin: 0px 4px;
 }
 
-#pages-inner a:hover {
+#content-pages a:hover {
     color: #559AC8;
+}
+
+.active {
+    /*The element does not react to pointer events*/
+    /*該元素不會對pointer事件有反應*/
+    pointer-events: none;
+    color: #559AC8;
+}
+
+.stop-action {
+    pointer-events: none;
+    color: rgba(74, 74, 74, 0.50);
+    border: 1px black solid;
 }
 
 footer {
