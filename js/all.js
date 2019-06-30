@@ -64,11 +64,13 @@ function checkZone(e) {
 // 點擊「select中選項」或「頁碼」產生資料
 let ctnTitle = document.getElementById("content-title");
 let ctnSites = document.getElementById("content-sites");
-let pagesIn = document.getElementById("pages-inner");
-let goTop = document.querySelector(".icon-goTop");
-let zoneName, pages;
+let ctnPages = document.getElementById("content-pages");
+let zoneName;
+let pages; // 產生的頁數
+let currentPage; // 目前所在頁數
+let hits; // 該區總共多少筆資料
 selZone.addEventListener("change", showSitePages);
-pagesIn.addEventListener("click", checkPage);
+ctnPages.addEventListener("click", checkPage);
 
 // 點擊「select中選項」
 function showSitePages(e) {
@@ -78,51 +80,89 @@ function showSitePages(e) {
     } else {
         ctnTitle.innerHTML = zoneName;
     }
-    let hits = 0;
+    hits = 0;
     //判斷該區共有多少筆資料
     for (let i = 0; i < dataRecords.length; i++) {
         if (zoneName == dataRecords[i].Zone) {
             hits += 1;
         }
     }
-    makePages(hits);
-    showSite(1, zoneName);
-}
-
-// 製造「頁碼」
-function makePages(hits) {
-    pagesIn.innerHTML = "";
-    pages = Math.ceil(hits / 10);
-    for (let i = 0; i < pages; i++) {
-        let aPage = document.createElement("a");
-        aPage.setAttribute("href", "#");
-        aPage.textContent = i + 1;
-        if (pages > 1) {
-            aPage.setAttribute("class", "pages");
-        }
-        pagesIn.appendChild(aPage);
-    }
+    currentPage = 1;
+    makePages();
+    showSite(currentPage);
 }
 
 // 點擊「頁碼」
 function checkPage(e) {
     e.preventDefault();
     if (e.target.nodeName == "A") {
-        let selPage = e.target.textContent;
-        showSite(selPage, zoneName);
+        let txt = e.target.textContent;
+        if (txt == "<prev") {
+            if (currentPage != 1) {
+                currentPage--;
+            }
+        } else if (txt == "next>") {
+            if (currentPage != pages) {
+                currentPage++;
+            }
+        } else {
+            currentPage = txt;
+        }
+        makePages();
+        showSite(currentPage);
     }
 }
 
+// 製造「頁碼」
+function makePages() {
+    ctnPages.innerHTML = "";
+    // 產生 <prev 連結
+    let prevLink = document.createElement("a");
+    //prevLink.setAttribute("href", "#");
+    prevLink.textContent = "<prev";
+    // 產生 next> 連結
+    let nextLink = document.createElement("a");
+    nextLink.textContent = "next>";
+    // 產生中間頁碼
+    let pagesIn = document.createElement("div");
+    pagesIn.setAttribute("id", "pages-inner");
+    pages = Math.ceil(hits / 4);
+    for (let i = 0; i < pages; i++) {
+        let aPage = document.createElement("a");
+        //aPage.setAttribute("href", "#");
+        aPage.textContent = i + 1;
+        if (i == currentPage - 1) {
+            aPage.setAttribute("class", "active");
+        }
+        if (pages > 1) {
+            prevLink.style.display = "block";
+            nextLink.style.display = "block";
+        }
+        pagesIn.appendChild(aPage);
+    }
+
+    // 如果在第一頁或最後一頁，<prev 和 next> 不能點擊
+    if (currentPage == 1) {
+        prevLink.setAttribute("class", "stop-action");
+    } else if (currentPage == pages) {
+        nextLink.setAttribute("class", "stop-action");
+    }
+    ctnPages.appendChild(prevLink);
+    ctnPages.appendChild(pagesIn);
+    ctnPages.appendChild(nextLink);
+}
+
+let goTop = document.querySelector(".icon-goTop");
 // 產生資料
-function showSite(selPage, zoneName) {
+function showSite(selPage) {
     ctnSites.innerHTML = "";
     let count = 0;
-    let start = (selPage - 1) * 10;
-    let end = (selPage - 1) * 10 + 10;
+    let start = (selPage - 1) * 4;
+    let end = (selPage - 1) * 4 + 4;
     for (let i = 0; i < dataRecords.length; i++) {
         if (zoneName == dataRecords[i].Zone) {
             count++;
-            if (start <= count && count <= end) {
+            if (start < count && count <= end) {
                 //製造 site-outer div
                 let divOut = document.createElement("div");
                 divOut.setAttribute("class", "site-outer");
