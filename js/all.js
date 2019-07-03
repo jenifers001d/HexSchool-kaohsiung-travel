@@ -1,11 +1,12 @@
 let dataUrl = "https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97";
 let dataOrigin; //取回的資料
 let dataRecords; //dataOrigin 中的旅遊資料
-let selZone = document.getElementById("selZone");
+let selZone = document.querySelector(".sel-zone");
 let loading = document.querySelector(".lds-css");
 let wrapper = document.querySelector(".wrapper");
 
 let dataZone = ["- - 請選擇行政區 - -"]; //用來產生 select 的陣列
+
 let xhr = new XMLHttpRequest();
 xhr.open("get", dataUrl, true);
 xhr.send();
@@ -25,9 +26,8 @@ xhr.onload = function () {
         }
     });
     showOpts(dataZone); //產生 options in select
-    loading.style.display = "none";
-    wrapper.style.display = "block";
-
+    loading.setAttribute("class", "lds-css ng-scope hide-loading");
+    wrapper.setAttribute("class", "wrapper show-web");
 };
 
 function showOpts(data) {
@@ -39,8 +39,9 @@ function showOpts(data) {
     }
 }
 
+
 // 點擊「熱門行政區」產生資料
-let hotsZone = document.getElementById("hots-zone");
+let hotsZone = document.querySelector(".hots-zone");
 hotsZone.addEventListener("click", checkZone);
 
 function checkZone(e) {
@@ -62,9 +63,9 @@ function checkZone(e) {
 }
 
 // 點擊「select中選項」或「頁碼」產生資料
-let ctnTitle = document.getElementById("content-title");
-let ctnSites = document.getElementById("content-sites");
-let ctnPages = document.getElementById("content-pages");
+let ctnTitle = document.querySelector(".content-title");
+let ctnSites = document.querySelector(".content-sites ul");
+let ctnPages = document.querySelector(".content-pages");
 let zoneName;
 let pages; // 產生的頁數
 let currentPage; // 目前所在頁數
@@ -125,28 +126,29 @@ function makePages() {
     nextLink.textContent = "next>";
     // 產生中間頁碼
     let pagesIn = document.createElement("div");
-    pagesIn.setAttribute("id", "pages-inner");
+    pagesIn.setAttribute("class", "pages-inner");
     pages = Math.ceil(hits / 4);
     for (let i = 0; i < pages; i++) {
         let aPage = document.createElement("a");
-        //aPage.setAttribute("href", "#");
         aPage.textContent = i + 1;
         if (i == currentPage - 1) {
             aPage.setAttribute("class", "active");
         }
-        if (pages > 1) {
-            prevLink.style.display = "block";
-            nextLink.style.display = "block";
-        }
+
         pagesIn.appendChild(aPage);
     }
 
-    // 如果在第一頁或最後一頁，<prev 和 next> 不能點擊
-    if (currentPage == 1) {
-        prevLink.setAttribute("class", "stop-action");
-    } else if (currentPage == pages) {
-        nextLink.setAttribute("class", "stop-action");
+    if (pages > 1) {
+        prevLink.setAttribute("class", "show-prev");
+        nextLink.setAttribute("class", "show-next");
+        if (currentPage == 1) {
+            prevLink.setAttribute("class", "show-prev stop-action");
+        } else if (currentPage == pages) {
+            nextLink.setAttribute("class", "show-next stop-action");
+        }
     }
+    // 如果在第一頁或最後一頁，<prev 和 next> 不能點擊
+
     ctnPages.appendChild(prevLink);
     ctnPages.appendChild(pagesIn);
     ctnPages.appendChild(nextLink);
@@ -164,7 +166,7 @@ function showSite(selPage) {
             count++;
             if (start < count && count <= end) {
                 //製造 site-outer div
-                let divOut = document.createElement("div");
+                let divOut = document.createElement("li");
                 divOut.setAttribute("class", "site-outer");
 
                 //製造 site 上半部
@@ -176,7 +178,7 @@ function showSite(selPage) {
                 let divUpIn = document.createElement("div");
                 divUpIn.setAttribute("class", "site-up-inner");
                 //製造 景點名稱
-                let pName = document.createElement("p");
+                let pName = document.createElement("h3");
                 pName.setAttribute("class", "site-title");
                 pName.textContent = dataRecords[i].Name;
                 //製造 景點所在區
