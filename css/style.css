@@ -25,6 +25,10 @@
     }
 }
 
+.hide-loading {
+    display: none;
+}
+
 .lds-spinner {
     position: relative;
 }
@@ -129,10 +133,10 @@
 
 .lds-spinner {
     top: 50vh;
-    left: 50%;
+    left: 50vw;
     width: 100px !important;
     height: 100px !important;
-    transform: translate(-50px, -100px) scale(0.5);
+    transform: translate(-75%, -100%) scale(0.5);
 }
 
 /*內文*/
@@ -142,14 +146,18 @@
     display: none;
 }
 
-#banner {
+.wrapper.show-web {
+    display: block;
+}
+
+.banner {
     background-image: url(../image/Hero.png);
     background-position: top center;
     height: 380px;
     width: 100%;
 }
 
-#banner-header {
+.banner-header {
     font-family: .PingFangTC-Regular;
     font-size: 40px;
     color: #FFFFFF;
@@ -172,7 +180,7 @@
 hide original SELECT element:*/
 }
 
-#selZone {
+.sel-zone {
     background: rgba(255, 255, 255, 0.70);
     border: 3px solid #FFFFFF;
     border-radius: 3px;
@@ -200,7 +208,7 @@ hide original SELECT element:*/
     position: relative;
 }
 
-#hots-area {
+.hots-area {
     background: #FFFFFF;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.20);
     border-radius: 5px;
@@ -211,17 +219,17 @@ hide original SELECT element:*/
     margin: auto;
 }
 
-#hots-area p {
+.hots-area p {
     padding-left: 26px;
     padding-top: 20px;
 }
 
-#hots-zone {
+.hots-zone {
     display: flex;
     justify-content: center;
 }
 
-#hots-zone button {
+.hots-zone button {
     height: 42px;
     width: 130px;
     border-radius: 5px;
@@ -233,24 +241,24 @@ hide original SELECT element:*/
     color: #FFFFFF;
 }
 
-#hots-zone button:nth-of-type(1) {
+.hots-zone button:nth-of-type(1) {
     background: #8A82CC;
     border-radius: 5px;
 }
 
 
-#hots-zone button:nth-of-type(2) {
+.hots-zone button:nth-of-type(2) {
     background: #FFA782;
     border-radius: 5px;
 }
 
 
-#hots-zone button:nth-of-type(3) {
+.hots-zone button:nth-of-type(3) {
     background: #F5D005;
     border-radius: 5px;
 }
 
-#hots-zone button:nth-of-type(4) {
+.hots-zone button:nth-of-type(4) {
     background: #559AC8;
     border-radius: 5px;
 }
@@ -282,11 +290,11 @@ hide original SELECT element:*/
     right: 62px;
 }
 
-#show-data {
+.show-data {
     padding: 0px 32px;
 }
 
-#content-title {
+.content-title {
     font-family: .SFNSDisplay;
     font-size: 36px;
     color: #8A82CC;
@@ -294,10 +302,11 @@ hide original SELECT element:*/
     margin-top: 65px;
 }
 
-#content-sites {
+.content-sites ul {
     display: flex;
     /*flex-wrap 超出範圍時換行的屬性*/
     flex-wrap: wrap;
+    list-style-type: none;
 }
 
 .site-outer {
@@ -387,16 +396,14 @@ hide original SELECT element:*/
     left: 346px;
 }
 
-#content-pages {
+.content-pages {
     margin-top: 31px;
     margin-bottom: 41px;
     display: flex;
     justify-content: center;
 }
 
-
-
-#content-pages a {
+.content-pages a {
     font-family: .AppleSystemUIFont;
     font-size: 14px;
     color: #4A4A4A;
@@ -404,40 +411,47 @@ hide original SELECT element:*/
     cursor: pointer
 }
 
-#content-pages > a:first-child {
+.content-pages > a:first-child {
     font-family: .SFNSText;
     margin-right: 22px;
     display: none;
 }
 
-#content-pages > a:last-child {
+.content-pages > a:first-child.show-prev {
+    display: block;
+}
+
+.content-pages > a:last-child {
     font-family: .SFNSText;
     margin-left: 22px;
     display: none;
 }
 
-#pages-inner a {
+.content-pages > a:last-child.show-next {
+    display: block;
+}
+
+.pages-inner a {
     display: inline-block;
     width: 24px;
     text-align: center;
     margin: 0px 4px;
 }
 
-#content-pages a:hover {
+.content-pages a:hover {
     color: #559AC8;
 }
 
-.active {
+.content-pages .active {
     /*The element does not react to pointer events*/
     /*該元素不會對pointer事件有反應*/
     pointer-events: none;
     color: #559AC8;
 }
 
-.stop-action {
+.content-pages .stop-action {
     pointer-events: none;
     color: rgba(74, 74, 74, 0.50);
-    border: 1px black solid;
 }
 
 footer {
@@ -457,26 +471,22 @@ footer .icon-goTop {
     display: none;
 }
 
-footer #footer-title {
+footer .footer-title {
     color: #FFFFFF;
     padding-top: 23px;
     padding-bottom: 15px;
 }
 
-footer #footer-content {
+footer .footer-content {
     color: #FFD366;
 }
 
 @media(max-width:768px) {
-    .lds-spinner {
-        left: 45vw;
-    }
-
     .wrapper {
         width: 100%;
     }
 
-    #hots-area {
+    .hots-area {
         width: 100%;
     }
 
@@ -505,25 +515,21 @@ footer #footer-content {
 }
 
 @media(max-width:414px) {
-    .lds-spinner {
-        left: 42vw;
-    }
-
     .custom-sel {
         width: 80%;
     }
 
-    #hots-area {
+    .hots-area {
         height: auto;
         width: 100%;
     }
 
-    #hots-zone {
+    .hots-zone {
         display: block;
         padding: 10px 34px;
     }
 
-    #hots-zone button {
+    .hots-zone button {
         height: 52px;
         width: 150px;
         margin-top: 14px;
@@ -554,5 +560,4 @@ footer #footer-content {
         padding-right: 10px;
         position: static;
     }
-
 }
