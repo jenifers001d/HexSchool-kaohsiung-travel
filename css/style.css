@@ -163,7 +163,12 @@
     color: #FFFFFF;
     letter-spacing: 3.89px;
     text-align: center;
-    padding-top: 89px;
+    padding-top: 69px;
+}
+
+h3.banner-header {
+    font-size: 30px;
+    padding-top: 0px;
 }
 
 /*the container must be positioned relative:*/
